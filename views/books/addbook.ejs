@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Add a Book</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <h1>Add a Book</h1>
+  <form action="/books/bookadded" method="post">
+    <label>Title
+      <input type="text" name="name" maxlength="50" required />
+    </label><br/>
+    <label>Price (£)
+      <input type="number" name="price" step="0.01" min="0" required />
+    </label><br/>
+    <button type="submit">Save</button>
+  </form>
+  <p><a href="/">Home</a></p>
+</body>
+</html>
