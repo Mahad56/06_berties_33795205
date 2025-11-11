@@ -1,23 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Add a Book</title>
+  <title>Add Book – Bertie's Books</title>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <h1>Add a New Book</h1>
-
-    <form action="/books/add" method="POST">
-        <label>Book Name:</label>
-        <input type="text" name="name" required><br><br>
-
-        <label>Price (£):</label>
-        <input type="number" name="price" step="0.01" required><br><br>
-
-        <button type="submit">Add Book</button>
-    </form>
-
-    <br>
-    <a href="/books/list">Back to Book List</a> |
+<div class="container">
+  <h1>Bertie’s Books</h1>
+  <nav>
     <a href="/">Home</a>
+    <a href="/books/list">All Books</a>
+    <a href="/books/add">Add Book</a>
+    <a href="/books/search">Search</a>
+  </nav>
+
+  <div class="section">
+    <h2 style="margin-top:0">Add a New Book</h2>
+    <form action="/books/add" method="POST">
+      <label>Book Name</label>
+      <input type="text" name="name" required>
+
+      <label>Price (£)</label>
+      <input type="number" step="0.01" name="price" required>
+
+      <div class="actions">
+        <button class="btn btn-primary" type="submit">Add Book</button>
+        <a class="btn" href="/books/list">Back to List</a>
+      </div>
+    </form>
+  </div>
+</div>
 </body>
 </html>

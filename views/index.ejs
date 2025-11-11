@@ -1,19 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Welcome to <%=shopData.shopName%></title>
-    <link rel="stylesheet"  type="text/css" href="/main.css" />
-  </head>
-  <body>
-    <h1>Welcome to <%=shopData.shopName%></h1>
-      <p><a href="about">About <%=shopData.shopName%></a></p>
-      <p><a href="books/search">Search for books</a></p>
-      <p><a href="users/register">Register with us</a></p>
+<head>
+  <title>Welcome to <%= shopData.shopName %></title>
+  <link rel="stylesheet" type="text/css" href="/styles.css" />
+</head>
+<body>
+<div class="container">
+  <h1>Bertie’s Books</h1>
 
-      <p>
-        <a href="/books/list">View Books</a> |
-        <a href="/books/add">Add Book</a> |
-        <a href="/books/search">Search Books</a>
-      </p>
-  </body>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/books/list">All Books</a>
+    <a href="/books/add">Add Book</a>
+    <a href="/books/search">Search Books</a>
+    <a href="/users/register">Register</a>
+    <a href="/about">About</a>
+  </nav>
+
+  <div class="section">
+    <h2 style="margin-top:0">Welcome 👋</h2>
+    <p>Explore, add, and manage books using the links above.</p>
+  </div>
+</div>
+</body>
 </html>

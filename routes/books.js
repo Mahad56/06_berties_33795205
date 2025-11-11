@@ -44,5 +44,16 @@ router.post('/add', function (req, res, next) {
   });
 });
 
+// Delete by id
+router.get('/delete/:id', function (req, res, next) {
+  const id = req.params.id;
+  const sql = "DELETE FROM books WHERE id = ?";
+  db.query(sql, [id], (err) => {
+    if (err) return next(err);
+    res.redirect('/books/list');
+  });
+});
+
+
 //  Export router
 module.exports = router;

@@ -1,23 +1,42 @@
 <!DOCTYPE html>
 <html>
-<head><title>Book List</title></head>
+<head>
+  <title>Book List – Bertie's Books</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
 <body>
-  <h1>Book List</h1>
-  <table border="1" cellpadding="6">
-    <tr><th>ID</th><th>Name</th><th>Price (£)</th></tr>
-    <% books.forEach(b => { %>
-      <tr>
-        <td><%= b.id %></td>
-        <td><%= b.name %></td>
-        <td><%= b.price %></td>
-      </tr>
-    <% }) %>
-  </table>
-
-  <p>
-    <a href="/books/add">Add Book</a> |
-    <a href="/books/search">Search</a> |
+<div class="container">
+  <h1>Bertie’s Books</h1>
+  <nav>
     <a href="/">Home</a>
-  </p>
+    <a href="/books/list">All Books</a>
+    <a href="/books/add">Add Book</a>
+    <a href="/books/search">Search</a>
+  </nav>
+
+  <div class="section">
+    <h2 style="margin-top:0">Book List <span class="badge">(<%= books.length %>)</span></h2>
+
+    <table class="table">
+      <tr><th>ID</th><th>Name</th><th>Price (£)</th><th>Actions</th></tr>
+      <% books.forEach(b => { %>
+        <tr>
+          <td><%= b.id %></td>
+          <td><%= b.name %></td>
+          <td><%= b.price %></td>
+          <td class="actions">
+            <a class="btn" href="/books/edit/<%= b.id %>">Edit</a>
+            <a class="btn btn-danger" href="/books/delete/<%= b.id %>" onclick="return confirm('Delete this book?')">Delete</a>
+          </td>
+        </tr>
+      <% }) %>
+    </table>
+
+    <div style="margin-top:14px">
+      <a class="btn btn-primary" href="/books/add">+ Add Book</a>
+      <a class="btn" href="/books/search">Search</a>
+    </div>
+  </div>
+</div>
 </body>
 </html>

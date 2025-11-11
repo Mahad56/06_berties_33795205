@@ -1,27 +1,42 @@
 <!DOCTYPE html>
 <html>
-<head><title>Search Results</title></head>
+<head>
+  <title>Results – Bertie's Books</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
 <body>
-  <h1>Search Results for "<%= term %>"</h1>
-
-  <% if (books.length === 0) { %>
-    <p>No books found.</p>
-  <% } else { %>
-    <table border="1" cellpadding="6">
-      <tr><th>ID</th><th>Name</th><th>Price (£)</th></tr>
-      <% books.forEach(b => { %>
-        <tr>
-          <td><%= b.id %></td>
-          <td><%= b.name %></td>
-          <td><%= b.price %></td>
-        </tr>
-      <% }) %>
-    </table>
-  <% } %>
-
-  <p>
-    <a href="/books/search">Search Again</a> |
+<div class="container">
+  <h1>Bertie’s Books</h1>
+  <nav>
+    <a href="/">Home</a>
     <a href="/books/list">All Books</a>
-  </p>
+    <a href="/books/add">Add Book</a>
+    <a href="/books/search">Search</a>
+  </nav>
+
+  <div class="section">
+    <h2 style="margin-top:0">Results for "<%= term %>"</h2>
+
+    <% if (books.length === 0) { %>
+      <p>No books found.</p>
+    <% } else { %>
+      <table class="table">
+        <tr><th>ID</th><th>Name</th><th>Price (£)</th></tr>
+        <% books.forEach(b => { %>
+          <tr>
+            <td><%= b.id %></td>
+            <td><%= b.name %></td>
+            <td><%= b.price %></td>
+          </tr>
+        <% }) %>
+      </table>
+    <% } %>
+
+    <div style="margin-top:14px">
+      <a class="btn" href="/books/search">Search Again</a>
+      <a class="btn" href="/books/list">Back to List</a>
+    </div>
+  </div>
+</div>
 </body>
 </html>
