@@ -5,8 +5,11 @@ const path = require('path')
 var mysql = require('mysql2');
 
 // Create the express application object
+// Create the express application object
 const app = express()
-const port = 8000
+
+const port = process.env.PORT || 8000
+
 
 // Define the database connection pool
 const db = mysql.createPool({
