@@ -27,6 +27,9 @@ global.db = db;
 // Tell Express that we want to use EJS as the templating engine
 app.set('view engine', 'ejs')
 
+app.set('views', path.join(__dirname, 'views'))
+
+
 // Set up the body parser 
 app.use(express.urlencoded({ extended: true }))
 

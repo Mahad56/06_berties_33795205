@@ -2,12 +2,15 @@
 const express = require("express")
 const router = express.Router()
 
-//  List all books (EJS table instead of JSON)
+// Make sure db is available
+const db = global.db
+
+// List all books
 router.get('/list', function(req, res, next) {
   const sqlquery = "SELECT * FROM books";
   db.query(sqlquery, (err, result) => {
     if (err) return next(err);
-    res.render("books/list", { books: result });  // pass data to view
+    res.render("books/list", { books: result });
   });
 });
 
@@ -16,9 +19,9 @@ router.get('/search', function(req, res) {
   res.render("books/search");
 });
 
-//  Search database
+// Search results
 router.get(['/search-result', '/search_result'], function (req, res, next) {
-  const term = (req.query.keyword || req.query.search_text || '').trim();
+  const term = (req.query.keyword || '').trim();
   const sqlquery = "SELECT * FROM books WHERE name LIKE ?";
   
   db.query(sqlquery, [`%${term}%`], (err, result) => {
@@ -27,12 +30,12 @@ router.get(['/search-result', '/search_result'], function (req, res, next) {
   });
 });
 
-//  Add Book form
+// Add form
 router.get('/add', function(req, res) {
   res.render('books/add');
 });
 
-// Add Book submit
+// Add submit
 router.post('/add', function (req, res, next) {
   const name = req.body.name;
   const price = req.body.price;
@@ -44,7 +47,7 @@ router.post('/add', function (req, res, next) {
   });
 });
 
-// Delete by id
+// Delete book
 router.get('/delete/:id', function (req, res, next) {
   const id = req.params.id;
   const sql = "DELETE FROM books WHERE id = ?";
@@ -54,6 +57,5 @@ router.get('/delete/:id', function (req, res, next) {
   });
 });
 
-
-//  Export router
+// Export router
 module.exports = router;
