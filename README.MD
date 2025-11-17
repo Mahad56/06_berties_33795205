@@ -1,3 +1,4 @@
+
 # Berties Books
 Bertie’s Books – Lab 6 Submission Summary
 
@@ -7,27 +8,16 @@ The aim was to create a simple book shop system that can add, list and search bo
 Features used
 
 MySQL database created (berties_books)
-
 books table created with id, name, price fields
-
 Test data inserted
-
 Node.js app connected to MySQL
-
 List all books page
-
 Search books page and search results
-
 Add new book form and insert into database
-
 Navigation between pages
-
 Styled pages (improved UI)
-
 Deployed application to Goldsmiths VM server
-
 Application runs on server using pm2
-
 Database Setup
 
 Commands used:
@@ -51,6 +41,7 @@ Route	Description
 /books/add	Add a new book
 /books/search	Search books
 /books/search-result	Display search results
+
 How to Run (Local)
 npm install
 node index.js
