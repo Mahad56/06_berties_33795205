@@ -1,5 +1,1 @@
-GitHub repository link:
-https://github.com/Mahad56/06_berties_33795205
-
-Live app link:
-http://doc.gold.ac.uk/usr/183/
+home=http://www.doc.gold.ac.uk/usr/183/

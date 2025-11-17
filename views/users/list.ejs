@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User List – Bertie's Books</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<div class="container">
+  <h1>User List</h1>
+
+  <table class="table">
+    <tr><th>Username</th><th>First</th><th>Last</th><th>Email</th></tr>
+
+    <% users.forEach(u => { %>
+      <tr>
+        <td><%= u.username %></td>
+        <td><%= u.first %></td>
+        <td><%= u.last %></td>
+        <td><%= u.email %></td>
+      </tr>
+    <% }) %>
+  </table>
+
+</div>
+
+</body>
+</html>
