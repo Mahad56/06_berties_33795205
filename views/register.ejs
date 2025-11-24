@@ -1,15 +1,30 @@
 <!doctype html>
 <html>
 <head>
-    <title>Register</title>
-    <link rel="stylesheet" href="/styles.css">
+    <title>Register – Bertie's Books</title>
+    <link rel="stylesheet" href="../styles.css">
 </head>
 
 <body>
-    <div class="container section">
-        <h1>Register for <%= shopData.shopName %></h1>
+<div class="container">
 
-        <form method="POST" action="registered">
+    <h1>Bertie’s Books</h1>
+
+    <nav>
+        <a href="../">Home</a>
+        <a href="../books/list">All Books</a>
+        <a href="../books/add">Add Book</a>
+        <a href="../books/search">Search Books</a>
+        <a href="./register">Register</a>
+        <a href="./login">Login</a>
+        <a href="../about">About</a>
+        <a href="../logout">Logout</a>
+    </nav>
+
+    <div class="section">
+        <h2>Register for <%= shopData.shopName %></h2>
+
+        <form method="POST" action="./registered">
 
             <label for="first">First Name</label>
             <input id="first" type="text" name="first">
@@ -32,5 +47,7 @@
 
         </form>
     </div>
+
+</div>
 </body>
 </html>

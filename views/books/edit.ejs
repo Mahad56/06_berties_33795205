@@ -2,22 +2,27 @@
 <html>
 <head>
   <title>Edit Book – Bertie's Books</title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
 <div class="container">
   <h1>Bertie’s Books</h1>
+
   <nav>
-    <a href="/">Home</a>
-    <a href="/books/list">All Books</a>
-    <a href="/books/add">Add Book</a>
-    <a href="/books/search">Search</a>
+    <a href="../">Home</a>
+    <a href="../books/list">All Books</a>
+    <a href="../books/add">Add Book</a>
+    <a href="../books/search">Search</a>
+    <a href="../users/register">Register</a>
+    <a href="../users/login">Login</a>
+    <a href="../about">About</a>
+    <a href="../logout">Logout</a>
   </nav>
 
   <div class="section">
     <h2>Edit Book</h2>
 
-    <form action="/books/edit/<%= book.id %>" method="POST">
+    <form action="../books/edit/<%= book.id %>" method="POST">
       <label>Title</label>
       <input type="text" name="title" value="<%= book.title %>" required>
 
@@ -29,10 +34,11 @@
 
       <div class="actions">
         <button class="btn btn-primary" type="submit">Save</button>
-        <a class="btn" href="/books/list">Cancel</a>
+        <a class="btn" href="../books/list">Cancel</a>
       </div>
     </form>
   </div>
+
 </div>
 </body>
 </html>
