@@ -1,65 +1,107 @@
+# Bertie’s Books – Lab 8: Sessions and Access Control
 
-# Berties Books
-Bertie’s Books – Lab 6 Submission Summary
+This lab adds user session management and access control to the Bertie’s Books application using the express-session module.
 
-This coursework implements the Bertie’s Books web application using Node.js, Express, EJS and MySQL.
-The aim was to create a simple book shop system that can add, list and search books stored in a MySQL database, and deploy it to the Goldsmiths student server.
+---
 
-Features used
+##  Session Setup
 
-MySQL database created (berties_books)
-books table created with id, name, price fields
-Test data inserted
-Node.js app connected to MySQL
-List all books page
-Search books page and search results
-Add new book form and insert into database
-Navigation between pages
-Styled pages (improved UI)
-Deployed application to Goldsmiths VM server
-Application runs on server using pm2
-Database Setup
+Sessions were configured in `index.js` using the `express-session` package:
 
-Commands used:
+```js
+app.use(session({
+    secret: 'somerandomstuff',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { expires: 600000 }
+}));
+The secret signs session IDs to prevent tampering.
+A logged-in user keeps their session until the cookie expires or they log out.
 
-CREATE DATABASE berties_books;
-USE berties_books;
-CREATE TABLE books (id INT AUTO_INCREMENT, name VARCHAR(50), price DECIMAL(5,2), PRIMARY KEY(id));
-INSERT INTO books (name, price) VALUES (...);
+ Login Session
+When a login is successful, the session is saved:
+
+js
+Copy code
+req.session.userId = req.body.username;
+This identifies the current logged-in user for future requests.
+
+ Access Control (redirectLogin Middleware)
+The following middleware was added in users.js:
+
+js
+Copy code
+const redirectLogin = (req, res, next) => {
+    if (!req.session.userId) {
+        res.redirect('/users/login');
+    } else {
+        next();
+    }
+};
+This ensures only authenticated users can access protected routes.
+
+ Protected Routes
+These routes require login and use redirectLogin:
+
+/users/list
+
+/books/list
+
+/books/add
+
+/books/edit/:id
+
+/books/delete/:id
+
+If the user is not logged in, they are redirected to the login page.
+
+Public Routes
+These routes are always accessible:
+
+/
+
+/about
+
+/users/login
+
+/users/register
+
+/books/search
+
+/books/search-results
+
+Logout Functionality
+A logout route was added in main.js:
+
+js
+Copy code
+router.get('/logout', redirectLogin, (req, res) => {
+    req.session.destroy(err => {
+        if (err) return res.redirect('./');
+        res.send('You are now logged out. <a href="./">Home</a>');
+    });
+});
+A logout link was added to the navigation so users can end their session.
+
+Testing
+When NOT logged in:
+Visiting any protected route redirects to /users/login.
+
+When logged in:
+All protected pages load normally.
+
+Session cookie appears in browser storage.
+
+After logout:
+Session is destroyed.
+
+Protected pages redirect to login again.
+
+ How to run :
+The project was pushed to GitHub and redeployed on the Goldsmiths VM:
 
 
-Deployment on VM:
-
-sudo mysql
-source create_db.sql;
-source insert_test_data.sql;
-
-Key Routes
-Route	Description
-/	Home page
-/books/list	Display all books
-/books/add	Add a new book
-/books/search	Search books
-/books/search-result	Display search results
-
-How to Run (Local)
+Copy code
+git pull
 npm install
 node index.js
-http://localhost:8000
-
-How to Run (VM)
-git clone <repo>
-cd berties-books
-npm install
-sudo mysql
-source create_db.sql;
-source insert_test_data.sql;
-pm2 start index.js --name berties-books
-
-Repository
-
-https://github.com/Mahad56/berties-books
-
-Live URL
-
-http://doc.gold.ac.uk/usr/183
