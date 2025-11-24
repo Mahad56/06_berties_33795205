@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const ejs = require("ejs");
 const path = require("path");
@@ -18,10 +20,10 @@ const port = process.env.PORT || 8000
 
 // Define the database connection pool
 const db = mysql.createPool({
-  host: 'localhost',
-  user: 'berties_books_app',
-  password: 'qwertyuiop',
-  database: 'berties_books',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
@@ -55,6 +57,11 @@ app.use('/users', usersRoutes)
 // Load the route handlers for /books
 const booksRoutes = require('./routes/books')
 app.use('/books', booksRoutes)
+
+// register audit route
+const auditRoutes = require("./routes/audit");
+app.use("/audit", auditRoutes);
+
 
 // Start the web app listening
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

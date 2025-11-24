@@ -1,0 +1,7 @@
+<h1>Audit Log</h1>
+
+<ul>
+    <% logs.forEach(row => { %>
+        <li><strong><%= row.timestamp %></strong> — <%= row.action %></li>
+    <% }) %>
+</ul>
