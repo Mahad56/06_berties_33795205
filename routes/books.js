@@ -27,8 +27,8 @@ router.get('/search', function (req, res) {
 // search results
 router.get('/search-results', function (req, res, next) {
   const term = req.sanitize(req.query.keyword || "")
-  const sql = "SELECT * FROM books WHERE title LIKE ? OR author LIKE ?"
-  db.query(sql, [`%${term}%`, `%${term}%`], (err, result) => {
+  const sql = "SELECT * FROM books WHERE name LIKE ?"
+  db.query(sql, [`%${term}%`], (err, result) => {
     if (err) return next(err)
     res.render("books/search_results", { books: result, term })
   })
@@ -41,12 +41,11 @@ router.get('/add', redirectLogin, (req, res) => {
 
 // add submit
 router.post('/add', redirectLogin, (req, res, next) => {
-  const title = req.sanitize(req.body.title)
-  const author = req.sanitize(req.body.author)
-  const year = req.body.year   // number doest get sanitised
+  const name = req.sanitize(req.body.name)
+  const price = req.body.price
 
-  const sql = "INSERT INTO books (title, author, year) VALUES (?, ?, ?)"
-  db.query(sql, [title, author, year], (err) => {
+  const sql = "INSERT INTO books (name, price) VALUES (?, ?)"
+  db.query(sql, [name, price], (err) => {
       if (err) return next(err)
       res.redirect("../books/list")
   })
@@ -65,17 +64,15 @@ router.get('/edit/:id', redirectLogin, (req, res, next) => {
 // edit submit
 router.post('/edit/:id', redirectLogin, (req, res, next) => {
   const id = req.params.id
-  const title = req.sanitize(req.body.title)
-  const author = req.sanitize(req.body.author)
-  const year = req.body.year
+  const name = req.sanitize(req.body.name)
+  const price = req.body.price
 
-  const sql = "UPDATE books SET title = ?, author = ?, year = ? WHERE id = ?"
-  db.query(sql, [title, author, year, id], (err) => {
+  const sql = "UPDATE books SET name = ?, price = ? WHERE id = ?"
+  db.query(sql, [name, price, id], (err) => {
     if (err) return next(err)
     res.redirect('../books/list')
   })
 })
-
 
 // delete book
 router.get('/delete/:id', redirectLogin, (req, res, next) => {

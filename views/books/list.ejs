@@ -22,14 +22,18 @@
     <h2 style="margin-top:0">Book List <span class="badge">(<%= books.length %>)</span></h2>
 
     <table class="table">
-      <tr><th>ID</th><th>Title</th><th>Author</th><th>Year</th><th>Actions</th></tr>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price (£)</th>
+        <th>Actions</th>
+      </tr>
 
       <% books.forEach(b => { %>
         <tr>
           <td><%= b.id %></td>
-          <td><%= b.title %></td>
-          <td><%= b.author %></td>
-          <td><%= b.year %></td>
+          <td><%= b.name %></td>
+          <td><%= b.price %></td>
           <td class="actions">
             <a class="btn" href="./edit/<%= b.id %>">Edit</a>
             <a class="btn btn-danger" href="./delete/<%= b.id %>" onclick="return confirm('Delete this book?')">Delete</a>
