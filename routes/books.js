@@ -5,7 +5,7 @@ const db = global.db
 
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId) {
-        return res.redirect('./users/login')
+        return res.redirect('../users/login')
     }
     next()
 }
@@ -48,7 +48,7 @@ router.post('/add', redirectLogin, (req, res, next) => {
   const sql = "INSERT INTO books (title, author, year) VALUES (?, ?, ?)"
   db.query(sql, [title, author, year], (err) => {
       if (err) return next(err)
-      res.redirect("./books/list")
+      res.redirect("../books/list")
   })
 })
 
@@ -72,7 +72,7 @@ router.post('/edit/:id', redirectLogin, (req, res, next) => {
   const sql = "UPDATE books SET title = ?, author = ?, year = ? WHERE id = ?"
   db.query(sql, [title, author, year, id], (err) => {
     if (err) return next(err)
-    res.redirect('./books/list')
+    res.redirect('../books/list')
   })
 })
 
@@ -83,7 +83,7 @@ router.get('/delete/:id', redirectLogin, (req, res, next) => {
   const sql = "DELETE FROM books WHERE id = ?"
   db.query(sql, [id], (err) => {
     if (err) return next(err)
-    res.redirect('./books/list')
+    res.redirect('../books/list')
   })
 })
 
