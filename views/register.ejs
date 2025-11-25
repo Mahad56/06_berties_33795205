@@ -22,7 +22,18 @@
     </nav>
 
     <div class="section">
+
         <h2>Register for <%= shopData.shopName %></h2>
+
+        <% if (typeof errors !== "undefined" && errors.length > 0) { %>
+            <div class="error-box">
+                <ul>
+                    <% errors.forEach(e => { %>
+                        <li><%= e.msg %></li>
+                    <% }) %>
+                </ul>
+            </div>
+        <% } %>
 
         <form method="POST" action="./registered">
 

@@ -5,19 +5,11 @@ const ejs = require("ejs");
 const path = require("path");
 const mysql = require("mysql2");
 const session = require("express-session");
-
-
+const expressSanitizer = require("express-sanitizer");
 
 // Create the express application object
-// Create the express application object
-const app = express()
-
-const port = process.env.PORT || 8000
-
-
-
-
-
+const app = express();
+const port = process.env.PORT || 8000;
 
 // Define the database connection pool
 const db = mysql.createPool({
@@ -31,49 +23,39 @@ const db = mysql.createPool({
 });
 global.db = db;
 
+// EJS templating
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
-// Tell Express that we want to use EJS as the templating engine
-app.set('view engine', 'ejs')
+// Body parser
+app.use(express.urlencoded({ extended: true }));
 
-app.set('views', path.join(__dirname, 'views'))
+// Sanitiser (REQUIRED FOR LAB 8B)
+app.use(expressSanitizer());
 
-
-// Set up the body parser 
-app.use(express.urlencoded({ extended: true }))
-
-// Create a session
-app.use(session({
-    secret: 'somerandomstuff', // used to sign/encrypt session ID cookie
+// Sessions (REQUIRED FOR LAB 8A)
+app.use(
+  session({
+    secret: "somerandomstuff",
     resave: false,
     saveUninitialized: false,
-    cookie: {
-        expires: 600000 // 10 minutes
-    }
-}));
+    cookie: { expires: 600000 }, // 10 minutes
+  })
+);
 
+// Static files
+app.use(express.static(path.join(__dirname, "public")));
 
-// Set up public folder (for css and static js)
-app.use(express.static(path.join(__dirname, 'public')))
+// App-specific data
+app.locals.shopData = { shopName: "Bertie's Books" };
 
-// Define our application-specific data
-app.locals.shopData = {shopName: "Bertie's Books"}
+// Routes
+app.use("/", require("./routes/main"));
+app.use("/users", require("./routes/users"));
+app.use("/books", require("./routes/books"));
+app.use("/audit", require("./routes/audit"));
 
-// Load the route handlers
-const mainRoutes = require("./routes/main")
-app.use('/', mainRoutes)
-
-// Load the route handlers for /users
-const usersRoutes = require('./routes/users')
-app.use('/users', usersRoutes)
-
-// Load the route handlers for /books
-const booksRoutes = require('./routes/books')
-app.use('/books', booksRoutes)
-
-// register audit route
-const auditRoutes = require("./routes/audit");
-app.use("/audit", auditRoutes);
-
-
-// Start the web app listening
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+// Start server
+app.listen(port, () =>
+  console.log(`Example app listening on port ${port}!`)
+);
