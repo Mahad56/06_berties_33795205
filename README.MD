@@ -89,13 +89,81 @@ Visiting any protected route redirects to /users/login.
 
 When logged in:
 All protected pages load normally.
-
 Session cookie appears in browser storage.
 
 After logout:
 Session is destroyed.
-
 Protected pages redirect to login again.
+
+Part C – Sanitisation & XSS Protection
+XSS Demonstration
+
+Before sanitisation, the following input:
+
+Henry <script>alert("Gotcha!")</script>
+
+
+Triggered a JavaScript popup because raw HTML was being printed back to the browser in the registration confirmation page.
+
+This proves the site was vulnerable to XSS.
+
+ Sanitisation Added
+
+Added in index.js:
+
+const expressSanitizer = require("express-sanitizer");
+app.use(expressSanitizer());
+
+
+Applied sanitisation in users.js:
+
+const first = req.sanitize(req.body.first);
+const last = req.sanitize(req.body.last);
+const email = req.sanitize(req.body.email);
+const username = req.sanitize(req.body.username);
+const plainPassword = req.sanitize(req.body.password);
+
+Applied sanitisation in books.js:
+
+title
+author
+keyword
+Not sanitised:
+
+year because it is numeric.
+
+After Sanitisation
+Entering XSS payload no longer executes:
+<script> tags are removed.
+The popup does not appear.
+
+The saved value becomes:
+Henry alert("Gotcha!")
+
+Part D – Goldsmiths Compliance
+1. Test User (Required for Marking)
+
+Added to SQL:
+
+username: gold
+password: smiths
+Hash used (as required):
+
+$2b$10$WiTx/9NmkS8iy3E33xFu4O2UKthnJFhlUWpxcYhZmuvn0c6bVyYl.
+
+This user logs in correctly.
+
+2. Environment Variables (.env)
+
+The application uses:
+
+DB_HOST=localhost
+DB_USER=berties_books_app
+DB_PASS=qwertyuiop
+DB_NAME=berties_books
+PORT=8000
+
+Matches the values required in the lab instructions
 
  How to run :
 The project was pushed to GitHub and redeployed on the Goldsmiths VM:
