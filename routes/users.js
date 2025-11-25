@@ -9,7 +9,7 @@ const { check, validationResult } = require("express-validator");
 
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId) {
-        res.redirect('./login');
+        res.redirect('/users/login');
     } else {
         next();
     }
@@ -17,8 +17,12 @@ const redirectLogin = (req, res, next) => {
 
 // Registration form
 router.get('/register', function (req, res) {
-    res.render('register', { shopData: req.app.locals.shopData });
+    res.render('register', { 
+        shopData: req.app.locals.shopData,
+        errors: []
+    });
 });
+
 
 // Registration submit
 router.post(
@@ -38,8 +42,12 @@ router.post(
                 errors: errors.array()
             });
         }
+        const first = req.sanitize(req.body.first);
+        const last = req.sanitize(req.body.last);
+        const email = req.sanitize(req.body.email);
+        const username = req.sanitize(req.body.username);
+        const plainPassword = req.sanitize(req.body.password);
 
-        const { first, last, email, username, password: plainPassword } = req.body;
 
         bcrypt.hash(plainPassword, saltRounds, function (err, hashedPassword) {
             if (err) return next(err);
@@ -86,7 +94,9 @@ router.get('/login', function (req, res) {
 // Login processing
 router.post('/loggedin', function (req, res, next) {
 
-    const { username, password } = req.body;
+    const username = req.sanitize(req.body.username);
+    const password = req.sanitize(req.body.password);
+
 
     const sqlquery = "SELECT * FROM users WHERE username = ?";
     db.query(sqlquery, [username], (err, result) => {
