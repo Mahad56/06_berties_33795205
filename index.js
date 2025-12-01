@@ -55,6 +55,7 @@ app.use("/users", require("./routes/users"));
 app.use("/books", require("./routes/books"));
 app.use("/audit", require("./routes/audit"));
 app.use("/", require("./routes/weather"));
+app.use("/api", require("./routes/api"));
 
 
 // Start server
