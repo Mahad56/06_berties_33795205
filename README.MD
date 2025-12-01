@@ -1,3 +1,24 @@
+Bertie’s Books – Lab 9A & 9B
+
+This project extends the Bertie’s Books application by adding a weather feature and a books API. The application is deployed on the Goldsmiths VM and can be accessed through the required URLs. The home URL is http://www.doc.gold.ac.uk/usr/183/, the weather page is available at http://www.doc.gold.ac.uk/usr/183/weather, and the books API is available at http://www.doc.gold.ac.uk/usr/183/api/books.
+
+For Lab 9A, the /weather route connects to the OpenWeather API and allows the user to enter a city name. The app displays the temperature, humidity and general weather conditions. The form is shown at /weather, and when a city is submitted, the results are displayed immediately.
+
+For Lab 9B, a new route /api/books was created to return all book records in JSON format. A typical response includes each book’s id, name and price. The API supports an optional search parameter such as /api/books?search=animal to filter results by keyword. It also supports price filtering using the minprice and maxprice parameters, for example /api/books?minprice=5&maxprice=15. Sorting is also available using /api/books?sort=name or /api/books?sort=price.
+
+The API is intentionally left open without authentication, in line with the lab requirements. The project has been deployed on the VM using the forever process manager. The app can be started with forever start index.js, stopped with forever stopall, and monitored with forever list.
+
+The repository follows the required naming format 06_berties_33795205, and the links file contains a single line pointing to the home URL as instructed.
+
+
+
+
+
+
+
+
+
+
 # Bertie’s Books – Lab 8: Sessions and Access Control
 
 This lab adds user session management and access control to the Bertie’s Books application using the express-session module.
